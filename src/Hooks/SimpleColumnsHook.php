@@ -96,11 +96,11 @@ class SimpleColumnsHook extends \Frontend
 						if ($GLOBALS['TL_CONFIG']['simpleColumnsFramework'] == 'mootools' ||
 							($GLOBALS['TL_CONFIG']['simpleColumnsFramework'] == 'auto' && (version_compare(VERSION, '3', '<') || $objPage->hasMooTools)))
 						{
-							$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/simple_columns/assets/scripts/moo_simple_columns.js';
+							$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/contaosimplecolumns/scripts/moo_simple_columns.js';
 						}
 						elseif ($GLOBALS['TL_CONFIG']['simpleColumnsFramework'] == 'jquery' || $objPage->hasJQuery)
 						{
-							$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/simple_columns/assets/scripts/jquery_simple_columns.js';
+							$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/contaosimplecolumns/scripts/jquery_simple_columns.js';
 						}
 
 						define('SIMPLE_COLUMNS_JS_LINK', 1);
@@ -109,27 +109,36 @@ class SimpleColumnsHook extends \Frontend
 					$scClass .= ' sc-autoheight';
 				}
 
-				$columns = (strlen($objElement->simple_columns) == 1 ? (int)$objElement->simple_columns : (int)substr($objElement->simple_columns, 0, 1));
-				$columnCount = (strlen($objElement->simple_columns) == 1 ? 1 : (int)substr($objElement->simple_columns, 2, 1));
+				//print_r($simpleColumnCounter);
 
+				$temp = explode('-', $objElement->simple_columns);
+				$columns = (int)$temp[0];
+				$columnCount = (int)$temp[1] == 0 ? 1 : (int)$temp[1];
+
+				//$columns = (strlen($objElement->simple_columns) == 1 ? (int)$objElement->simple_columns : (int)substr($objElement->simple_columns, 0, 2));
+				//$columnCount = (strlen($objElement->simple_columns) == 1 ? 1 : (int)substr($objElement->simple_columns, 2, 1));
+
+				//print_r($columns);
+				//print_r($columnCount);
+				
 				if (TL_MODE == 'BE')
 				{
-					for ($i=0; $i<$simpleColumnCounter[$columns]; $i++)
+					for ($i=0; $i < $simpleColumnCounter[$columns]; $i++)
 					{
-						$be_html .= '<img src="system/modules/simple_columns/assets/images/empty.png" width="10" height="10" alt="" style="margin:2px 2px '.($simpleColumnRowspan?'12':'2').'px 2px">';
+						$be_html .= '<img src="bundles/contaosimplecolumns/images/empty.png" style="margin:2px 2px '.($simpleColumnRowspan?'12':'2').'px 2px; width:10px; height:10px;" alt="">';
 					}
 	
-					$be_html .= '<img src="system/modules/simple_columns/assets/images/column.png" width="'.($columnCount*10+($columnCount-1)*4).'" height="'.($simpleColumnRowspan?'20':'10').'" alt="" style="margin:2px">';
+					$be_html .= '<img src="bundles/contaosimplecolumns/images/column.png" style="margin:2px; width:'.($columnCount*10+($columnCount-1)*4).'px; height:'.($simpleColumnRowspan?'20':'10').'px;" alt="" style="margin:2px">';
 
 					if ($objElement->simple_columns_close)
 					{
-						$be_html .= '<img src="system/themes/default/images/close.gif" width="10" height="10" alt="" style="margin:2px">';
+						$be_html .= '<img src="bundles/contaosimplecolumns/images/close.gif" style="margin:2px; width:10px; height:10px;" alt="">';
 					}
 					else
 					{
-						for ($i=$simpleColumnCounter[$columns]+$columnCount; $i<$columns; $i++)
+						for($i = $simpleColumnCounter[$columns] + $columnCount; $i < $columns; $i++)
 						{
-							$be_html .= '<img src="system/modules/simple_columns/assets/images/empty.png" width="10" height="10" alt="" style="margin:2px 2px '.($simpleColumnRowspan?'12':'2').'px 2px">';
+							$be_html .= '<img src="bundles/contaosimplecolumns/images/empty.png" style="margin:2px 2px '.($simpleColumnRowspan?'12':'2').'px 2px; width:10px; height:10px;" alt="">';
 						}
 					}
 				}

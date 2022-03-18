@@ -27,7 +27,7 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-$GLOBALS['simpleColumnCounter'] = array(2=>0, 3=>0, 4=>0, 5=>0, 6=>0);
+$GLOBALS['simpleColumnCounter'] = array(2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0, 9=>0, 10=>0);
 $GLOBALS['simpleColumnRowspanCounter'] = 0;
 $GLOBALS['simpleColumnClose'] = false;
 $GLOBALS['simpleColumnBeHtml'] = '';
@@ -40,8 +40,8 @@ $GLOBALS['SIMPLECOLUMNS'] = array
 	'count' => 0,
 	'style' => array
 	(
-		'content-box' 	=> 'system/modules/simple_columns/assets/styles/simple_columns.css',
-		'border-box' 	=> 'system/modules/simple_columns/assets/styles/simple_columns_bb.css'
+		'content-box' 	=> 'bundles/contaosimplecolumns/styles/simple_columns.css',
+		'border-box' 	=> 'bundles/contaosimplecolumns/styles/simple_columns_bb.css'
 	),
 	'close' => '<div class="sc-clear"></div>');
 

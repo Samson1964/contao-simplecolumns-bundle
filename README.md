@@ -1,6 +1,8 @@
 SimpleColumns
 =============
 
+Text von Mario Müller von der Contao-2-Version
+
 Funktionsumfang
 ---------------
 

@@ -34,82 +34,80 @@ if (TL_MODE == 'BE')
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns']['title'],
-	'exclude'		=> true,
-	'inputType'		=> 'select',
-	'options'		=> array('2', '3', '3-2', '4', '4-2', '4-3', '5', '5-2', '5-3', '5-4', '6', '6-1', '6-2', '6-3', '6-4', '6-5'),
-	'reference'		=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns']['reference'],
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns']['title'],
+	'exclude'                         => true,
+	'inputType'                       => 'select',
+	'options'                         => &$GLOBALS['TL_LANG']['tl_content']['simple_columns']['reference'],
+	'eval' => array
 	(
-		'includeBlankOption'	=> true,
-		'maxlength'				=> 3,
-		'tl_class'				=> 'w50'
+		'includeBlankOption'          => true,
+		'maxlength'                   => 4,
+		'tl_class'                    => 'w50'
 	),
-	'sql'           => "char(3) NOT NULL default ''"
+	'sql'                             => "char(4) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_rowspan'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_rowspan']['title'],
-	'default'		=> '0',
-	'exclude'		=> true,
-	'inputType'		=> 'select',
-	'options'		=> array(0, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-	'reference'		=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_rowspan']['reference'],
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_rowspan']['title'],
+	'default'                         => '0',
+	'exclude'                         => true,
+	'inputType'                       => 'select',
+	'options'                         => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_rowspan']['reference'],
+	'eval' => array
 	(
-		'tl_class'				=> 'w50'
+		'tl_class'                    => 'w50'
 	),
-	'sql'           => "int(10) unsigned NOT NULL default '0'"
+	'sql'                             => "int(10) unsigned NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_close'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_close'],
-	'exclude'		=> true,
-	'inputType'		=> 'checkbox',
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_close'],
+	'exclude'                         => true,
+	'inputType'                       => 'checkbox',
+	'eval' => array
 	(
-		'tl_class'				=> 'w50'
+		'tl_class'                    => 'w50'
 	),
-	'sql'           => "char(1) NOT NULL default ''"
+	'sql'                             => "char(1) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_wrapper'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_wrapper'],
-	'exclude'		=> true,
-	'inputType'		=> 'checkbox',
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_wrapper'],
+	'exclude'                         => true,
+	'inputType'                       => 'checkbox',
+	'eval' => array
 	(
-		'tl_class'				=> 'w50'
+		'tl_class'                    => 'w50'
 	),
-	'sql'           => "char(1) NOT NULL default ''"
+	'sql'                             => "char(1) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_autoheight'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_autoheight'],
-	'exclude'		=> true,
-	'inputType'		=> 'checkbox',
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_autoheight'],
+	'exclude'                         => true,
+	'inputType'                       => 'checkbox',
+	'eval' => array
 	(
-		'tl_class'				=> 'w50'
+		'tl_class'                    => 'w50'
 	),
-	'sql'           => "char(1) NOT NULL default ''"
+	'sql'                             => "char(1) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_border'] = array
 (
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['simple_columns_border'],
-	'exclude'		=> true,
-	'inputType'		=> 'checkbox',
-	'eval'			=> array
+	'label'                           => &$GLOBALS['TL_LANG']['tl_content']['simple_columns_border'],
+	'exclude'                         => true,
+	'inputType'                       => 'checkbox',
+	'eval' 	=> array
 	(
-		'tl_class'				=> 'w50',
-		'disabled'				=> ($GLOBALS['TL_CONFIG']['simpleColumnsBoxSizing'] != 'border-box')
+		'tl_class'                    => 'w50',
+		'disabled'                    => ($GLOBALS['TL_CONFIG']['simpleColumnsBoxSizing'] != 'border-box')
 	),
-	'sql'           => "char(1) NOT NULL default ''"
+	'sql'                             => "char(1) NOT NULL default ''"
 );
 
 
@@ -135,7 +133,7 @@ foreach ($GLOBALS['TL_DCA']['tl_content']['palettes'] as $key => $palette)
 }
 
 
-class simpleColumns extends Backend
+class simpleColumns extends \Backend
 {
 	public function onLoadCallback($dc)
 	{
