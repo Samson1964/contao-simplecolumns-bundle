@@ -111,12 +111,8 @@ class SimpleColumnsHook extends \Frontend
 
 				//print_r($simpleColumnCounter);
 
-				$temp = explode('-', $objElement->simple_columns);
-				$columns = (int)$temp[0];
-				$columnCount = (int)$temp[1] == 0 ? 1 : (int)$temp[1];
-
-				//$columns = (strlen($objElement->simple_columns) == 1 ? (int)$objElement->simple_columns : (int)substr($objElement->simple_columns, 0, 2));
-				//$columnCount = (strlen($objElement->simple_columns) == 1 ? 1 : (int)substr($objElement->simple_columns, 2, 1));
+				$columns = (strlen($objElement->simple_columns) == 1 ? (int)$objElement->simple_columns : (int)substr($objElement->simple_columns, 0, 2));
+				$columnCount = (strlen($objElement->simple_columns) == 1 ? 1 : (int)substr($objElement->simple_columns, 2, 1));
 
 				//print_r($columns);
 				//print_r($columnCount);

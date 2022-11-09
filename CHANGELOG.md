@@ -1,5 +1,9 @@
 # SimpleColumns Changelog
 
+## Version 1.0.1 (2022-11-09)
+
+* Fix: Kompatibilität mit PHP 8 hergestellt
+
 ## Version 1.0.0 (2022-03-18)
 
 * Add: Ausbau von 5 auf 10 Spalten
