@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -29,13 +29,18 @@
 
 namespace Schachbulle\ContaoSimpleColumnsBundle\Hooks;
 
-class SimpleColumnsHook extends \Frontend
+use Contao\Frontend;
+use Contao\StringUtil;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+
+class SimpleColumnsHook extends Frontend
 {
 	public function myGetContentElement($objElement, $strBuffer)
 	{
 		/* defined in config/config.php */
-		global $simpleColumnCounter, $simpleColumnRowspanCounter, $simpleColumnClose, $simpleColumnBeHtml;
-		
+		global $simpleColumnCounter, $simpleColumnRowspanCounter, $simpleColumnClose, $simpleColumnBeHtml, $objPage;
+
 
 		if ($objElement->simple_columns == '' && $simpleColumnRowspanCounter < 2)
 		{
@@ -116,14 +121,14 @@ class SimpleColumnsHook extends \Frontend
 
 				//print_r($columns);
 				//print_r($columnCount);
-				
-				if (TL_MODE == 'BE')
+
+				if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
 				{
 					for ($i=0; $i < $simpleColumnCounter[$columns]; $i++)
 					{
 						$be_html .= '<img src="bundles/contaosimplecolumns/images/empty.png" style="margin:2px 2px '.($simpleColumnRowspan?'12':'2').'px 2px; width:10px; height:10px;" alt="">';
 					}
-	
+
 					$be_html .= '<img src="bundles/contaosimplecolumns/images/column.png" style="margin:2px; width:'.($columnCount*10+($columnCount-1)*4).'px; height:'.($simpleColumnRowspan?'20':'10').'px;" alt="" style="margin:2px">';
 
 					if ($objElement->simple_columns_close)
@@ -144,7 +149,7 @@ class SimpleColumnsHook extends \Frontend
 				{
 					$simpleColumnBeHtml = $be_html;
 				}
-				
+
 
 				if (!$simpleColumnRowspan || $startRowspan)
 				{
@@ -173,12 +178,12 @@ class SimpleColumnsHook extends \Frontend
 					$scClass .= ' sc-close';
 					$simpleColumnCounter[$columns] = 0;
 				}
-				
-				if (TL_MODE == 'FE')
+
+				if (System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
 				{
 					if ($startRowspan)
 					{
-						$cssIdClass = deserialize($objElement->cssID);
+						$cssIdClass = StringUtil::deserialize($objElement->cssID);
 
 						if (strlen($cssIdClass[1]))
 						{
@@ -194,7 +199,7 @@ class SimpleColumnsHook extends \Frontend
 					elseif (!$simpleColumnRowspan)
 					{
 						$count = 0;
-						
+
 						if ($objElement->simple_columns_wrapper)
 						{
 							$strBuffer = '<div class="'.$scClass.' sc-wrapper">'.$strBuffer.'</div>';
@@ -202,12 +207,12 @@ class SimpleColumnsHook extends \Frontend
 						else
 						{
 							$match[2] = preg_replace('~(class="[^"]*)"~iU', '$1 '.$scClass.'"', $match[2], 1, $count);
-							
+
 							if ($count < 1)
 							{
 								$match[2] = str_replace('>', ' class="'.$scClass.'">', $match[2]);
 							}
-							
+
 							$strBuffer = $match[1].$match[2].$match[3];
 						}
 					}
@@ -217,19 +222,18 @@ class SimpleColumnsHook extends \Frontend
 						$strBuffer .= $GLOBALS['SIMPLECOLUMNS']['close'];
 					}
 				}
-				
-				if (TL_MODE == 'BE')
+				else
 				{
 					$strBuffer = ($simpleColumnRowspan ? $simpleColumnBeHtml : $be_html) . '</div>' . $strBuffer;
 				}
 			}
-			
+
 			if ($closeRowspan)
 			{
 				$simpleColumnRowspan = false;
 			}
 		}
-		
+
 		return $strBuffer;
 	}
 

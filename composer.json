@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "contao/core-bundle": "^4"
+        "contao/core-bundle": "^4.13 || ^5.3"
     },
     "conflict": {
         "contao/core": "*",
