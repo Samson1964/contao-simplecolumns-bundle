@@ -1,5 +1,13 @@
 # SimpleColumns Changelog
 
+## Version 1.0.4 (2025-03-13)
+
+* Change: simple_columns.css angefangen leicht zu überarbeiten
+
+## Version 1.0.3 (2025-03-13)
+
+* Merge pull request #3 from lukasbableck/patch-1: Contao 5 compatibility
+
 ## Version 1.0.2 (2022-11-11)
 
 * Change: Abhängigkeit PHP-Version aufgehoben

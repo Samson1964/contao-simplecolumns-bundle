@@ -1,47 +1,73 @@
-/* allgemeine Definition */
+/* ********************************************************* */
+/* Allgemeines                                               */
+/* ********************************************************* */
 .sc {
-	margin-left:0 !important;
-	margin-right:0 !important;
-	padding-left:0 !important;
-	clear:none !important;
+	border: 1px solid darkblue;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	clear: none;
 }
+
 .sc-first
 {
-	clear: both !important;
+	clear: both;
 }
+
 .sc-last {
 }
+
 .sc-clear {
-	clear:left;
+	clear: left;
 }
 
 .sc-rowspan > *
 {
-	margin: 0!important;
-	padding: 0!important;
+	margin: 0;
+	padding: 0;
 }
 
-/* 2-spaltig */
+/* ********************************************************* */
+/* 2 Spalten                                                 */
+/* ********************************************************* */
 .sc2 {
-	width:49.5%;padding-right:1%;float:left;display:inline;
+	width: 49.4%;
+	margin-left: 0.3%;
+	margin-right: 0.3%;
+	float: left;
+	display: inline;
 }
 .sc2-first {
-	clear:left;
+	width: 49.7%;
+	margin-left: 0;
+	clear: left;
 }
 .sc2-last {
-	padding-right:0;
+	width: 49.7%;
+	margin-right: 0;
 }
 
-/* 3-spaltig */
+/* ********************************************************* */
+/* 3 Spalten                                                 */
+/* ********************************************************* */
 .sc3 {
-	width:32.3%;padding-right:1%;float:left;display:inline;
+	width: 32.8%;
+	margin-left: 0.3%;
+	margin-right: 0.3%;
+	float: left;
+	display: inline;
 }
 .sc3-first {
-	clear:left;
+	width: 33%;
+	margin-left: 0;
+	clear: left;
 }
 .sc3-last {
-	padding-right:1.1%;
+	width: 33%;
+	margin-right: 0;
 }
+
 .sc3-2 {
 	width:65.6%;padding-right:1%;float:left;display:inline;
 }
@@ -52,15 +78,26 @@
 	padding-right:1.1%;
 }
 
-/* 4-spaltig */
+/* ********************************************************* */
+/* 4 Spalten                                                 */
+/* ********************************************************* */
 .sc4 {
-	width:24%;padding-right:1%;float:left;display:inline;
+	width: 24.4%;
+	margin-left: 0.3%;
+	margin-right: 0.3%;
+	float: left;
+	display: inline;
 }
 .sc4-first {
-	clear:left;
+	width: 24.7%;
+	margin-left: 0;
+	clear: left;
 }
 .sc4-last {
+	width: 24.7%;
+	margin-right: 0;
 }
+
 .sc4-2 {
 	width:49%;padding-right:1%;float:left;display:inline;
 }
@@ -78,15 +115,26 @@
 .sc4-3-last {
 }
 
-/* 5-spaltig */
+/* ********************************************************* */
+/* 5 Spalten                                                 */
+/* ********************************************************* */
 .sc5 {
-	width:19%;padding-right:1%;float:left;display:inline;
+	width: 19.4%;
+	margin-left: 0.3%;
+	margin-right: 0.3%;
+	float: left;
+	display: inline;
 }
 .sc5-first {
-	clear:left;
+	width: 19.7%;
+	margin-left: 0;
+	clear: left;
 }
 .sc5-last {
+	width: 19.7%;
+	margin-right: 0;
 }
+
 .sc5-2 {
 	width:39%;padding-right:1%;float:left;display:inline;
 }
@@ -112,15 +160,26 @@
 .sc5-4-last {
 }
 
-/* 6-spaltig */
+/* ********************************************************* */
+/* 6 Spalten                                                 */
+/* ********************************************************* */
 .sc6 {
-	width:15.6%;padding-right:1%;float:left;display:inline;
+	width: 16.1%;
+	margin-left: 0.3%;
+	margin-right: 0.3%;
+	float: left;
+	display: inline;
 }
 .sc6-first {
-	clear:left;
+	width: 16.3%;
+	margin-left: 0;
+	clear: left;
 }
 .sc6-last {
+	width: 16.3%;
+	margin-right: 0;
 }
+
 .sc6-2 {
 	width:39%;padding-right:1%;float:left;display:inline;
 }
@@ -147,15 +206,26 @@
 }
 
 
-/* 7-spaltig */
+/* ********************************************************* */
+/* 7 Spalten                                                 */
+/* ********************************************************* */
 .sc7 {
-	width:13.28%;padding-right:1%;float:left;display:inline;
+	width: 13.92%;
+	margin-left: 0.2%;
+	margin-right: 0.2%;
+	float: left;
+	display: inline;
 }
 .sc7-first {
-	clear:left;
+	width: 14%;
+	margin-left: 0;
+	clear: left;
 }
 .sc7-last {
+	width: 14%;
+	margin-right: 0;
 }
+
 .sc7-2 {
 	width:27.57%;padding-right:1%;float:left;display:inline;
 }
