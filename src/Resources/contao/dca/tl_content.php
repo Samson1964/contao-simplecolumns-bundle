@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -27,7 +27,11 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-if (TL_MODE == 'BE')
+use Contao\Backend;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+
+if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('simpleColumns', 'onLoadCallback');
 }
@@ -133,7 +137,7 @@ foreach ($GLOBALS['TL_DCA']['tl_content']['palettes'] as $key => $palette)
 }
 
 
-class simpleColumns extends \Backend
+class simpleColumns extends Backend
 {
 	public function onLoadCallback($dc)
 	{
@@ -149,14 +153,14 @@ class simpleColumns extends \Backend
 		')->execute($dc->id);
 
 		$rowspan = 0;
-		
+
 		while ($objContent->next())
 		{
 			if ($objContent->id == $dc->id)
 			{
 				break;
 			}
-			
+
 			if ($rowspan > 0)
 			{
 				$rowspan--;
@@ -177,10 +181,10 @@ class simpleColumns extends \Backend
 	{
 		return '<p>Disabled</p>';
 	}
-	
+
 	public function hiddenField($dc)
 	{
 		return '';
 	}
-	
+
 }
