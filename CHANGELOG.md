@@ -1,5 +1,9 @@
 # SimpleColumns Changelog
 
+## Version 1.0.5 (2025-03-13)
+
+* Fix: Debug-Anweisung im CSS
+
 ## Version 1.0.4 (2025-03-13)
 
 * Change: simple_columns.css angefangen leicht zu überarbeiten

@@ -5,7 +5,7 @@
 /* allgemeine Definition */
 .sc
 {
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 	box-sizing: border-box !important;
 	-moz-box-sizing: border-box !important;
 	-webkit-box-sizing: border-box !important;
