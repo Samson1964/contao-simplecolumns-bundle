@@ -181,7 +181,7 @@
 }
 
 .sc6-2 {
-	width:39%;padding-right:1%;float:left;display:inline;
+	width:32.33%;padding-right:1%;float:left;display:inline;
 }
 .sc6-2-first {
 	clear:left;
@@ -189,7 +189,7 @@
 .sc6-2-last {
 }
 .sc6-3 {
-	width:59%;padding-right:1%;float:left;display:inline;
+	width:49%;padding-right:1%;float:left;display:inline;
 }
 .sc6-3-first {
 	clear:left;
@@ -197,12 +197,20 @@
 .sc6-3-last {
 }
 .sc6-4 {
-	width:79%;padding-right:1%;float:left;display:inline;
+	width:65.67%;padding-right:1%;float:left;display:inline;
 }
 .sc6-4-first {
 	clear:left;
 }
 .sc6-4-last {
+}
+.sc6-5 {
+	width:82.33%;padding-right:1%;float:left;display:inline;
+}
+.sc6-5-first {
+	clear:left;
+}
+.sc6-5-last {
 }
 
 

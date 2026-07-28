@@ -46,6 +46,10 @@ $GLOBALS['SIMPLECOLUMNS'] = array
 	'close' => '<div class="sc-clear"></div>');
 
 /**
- * Hook
+ * Hooks
  */
 $GLOBALS['TL_HOOKS']['getContentElement'][] = array('\Schachbulle\ContaoSimpleColumnsBundle\Hooks\SimpleColumnsHook', 'myGetContentElement');
+
+// Ergänzt die Spalten-Felder in allen Paletten von tl_content, nachdem sämtliche
+// DCA-Dateien geladen wurden (unabhängig von der Bundle-Reihenfolge)
+$GLOBALS['TL_HOOKS']['loadDataContainer'][] = array('\Schachbulle\ContaoSimpleColumnsBundle\Hooks\SimpleColumnsPaletteHook', 'onLoadDataContainer');

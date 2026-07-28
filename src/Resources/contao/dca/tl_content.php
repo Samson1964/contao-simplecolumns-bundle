@@ -28,6 +28,7 @@
  */
 
 use Contao\Backend;
+use Contao\Database;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -109,39 +110,25 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_border'] = array
 	'eval' 	=> array
 	(
 		'tl_class'                    => 'w50',
-		'disabled'                    => ($GLOBALS['TL_CONFIG']['simpleColumnsBoxSizing'] != 'border-box')
+		'disabled'                    => (($GLOBALS['TL_CONFIG']['simpleColumnsBoxSizing'] ?? 'content-box') != 'border-box')
 	),
 	'sql'                             => "char(1) NOT NULL default ''"
 );
 
 
-foreach ($GLOBALS['TL_DCA']['tl_content']['palettes'] as $key => $palette)
-{
-	$strPalette = '{simple_columns_legend},simple_columns,simple_columns_rowspan,simple_columns_close,simple_columns_wrapper,simple_columns_autoheight,simple_columns_border';
-
-	if (!is_array($palette))
-	{
-		if (strpos($palette, '{expert_legend:hide}') !== FALSE)
-		{
-			$GLOBALS['TL_DCA']['tl_content']['palettes'][$key] = str_replace('{expert_legend:hide}', $strPalette.';{expert_legend:hide}', $palette);
-		}
-		elseif (strpos($palette, '{protected_legend:hide}') !== FALSE)
-		{
-			$GLOBALS['TL_DCA']['tl_content']['palettes'][$key] = str_replace('{protected_legend:hide}', $strPalette.';{protected_legend:hide}', $palette);
-		}
-		else
-		{
-			$GLOBALS['TL_DCA']['tl_content']['palettes'][$key] .= ';'.$strPalette;
-		}
-	}
-}
+// Hinweis: Die Ergänzung der Paletten erfolgt im Hook "loadDataContainer"
+// (siehe Schachbulle\ContaoSimpleColumnsBundle\Hooks\SimpleColumnsPaletteHook).
+// An dieser Stelle wären nur die Paletten der Bundles erreichbar, die vor
+// diesem Bundle geladen werden.
 
 
 class simpleColumns extends Backend
 {
 	public function onLoadCallback($dc)
 	{
-		$objContent = $this->Database->prepare('
+		// Database::getInstance() statt $this->Database: der Zugriff auf importierte
+		// Objekte ist seit Contao 5.2 als veraltet markiert
+		$objContent = Database::getInstance()->prepare('
 			SELECT
 				`id`,`simple_columns`,`simple_columns_rowspan`
 			FROM
