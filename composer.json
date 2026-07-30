@@ -1,7 +1,14 @@
 {
     "name": "schachbulle/contao-simplecolumns-bundle",
     "type": "contao-bundle",
-    "description": "Spalten-Erweiterung für Contao 4",
+    "description": "Inhaltselemente für einen mehrspaltigen Seitenaufbau, aufbauend auf der Contao-2-Fassung von Mario Müller.",
+    "keywords": [
+        "contao",
+        "spalten",
+        "layout",
+        "inhaltselement"
+    ],
+    "homepage": "https://github.com/Samson1964/contao-simplecolumns-bundle",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {

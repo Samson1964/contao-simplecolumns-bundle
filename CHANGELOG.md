@@ -1,5 +1,9 @@
 # SimpleColumns Changelog
 
+## Version 1.1.1 (2026-07-30)
+
+* Change: Beschreibung, Keywords und Homepage in der composer.json ergänzt, damit Packagist das Paket verständlich darstellt und über die Suche auffindbar macht
+
 ## Version 1.1.0 (2026-07-28)
 
 * Fix: Spalteneinstellungen erscheinen jetzt in **allen** Inhaltselementen. Die Paletten werden über den Hook `loadDataContainer` ergänzt statt direkt in `dca/tl_content.php`. Bisher fehlten die Felder in allen Bundles, deren Paketname alphabetisch hinter `schachbulle/contao-simplecolumns-bundle` liegt (u.a. spielerregister, teamtournament, tributes, turnierbuero, tweet, twitch, volunteeringlist).
