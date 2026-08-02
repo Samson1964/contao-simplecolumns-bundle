@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Schachbulle\ContaoSimpleColumnsBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
@@ -10,14 +12,11 @@ use Schachbulle\ContaoSimpleColumnsBundle\ContaoSimpleColumnsBundle;
 
 class Plugin implements BundlePluginInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBundles(ParserInterface $parser)
-	{
-		return [
-			BundleConfig::create(ContaoSimpleColumnsBundle::class)
-				->setLoadAfter([ContaoCoreBundle::class]),
-		];
-	}
+    public function getBundles(ParserInterface $parser)
+    {
+        return [
+            BundleConfig::create(ContaoSimpleColumnsBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
+        ];
+    }
 }
