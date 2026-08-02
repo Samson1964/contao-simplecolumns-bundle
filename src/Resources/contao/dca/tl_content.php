@@ -122,13 +122,38 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['simple_columns_border'] = array
 // diesem Bundle geladen werden.
 
 
+/**
+ * Callback-Klasse für die Spalteneinstellungen in tl_content.
+ */
 class simpleColumns extends Backend
 {
-	public function onLoadCallback($dc)
+	/**
+	 * onload_callback: markiert die Spalteneinstellungen als wirkungslos.
+	 *
+	 * Gehört das bearbeitete Element zu einem Spaltenset, das ein vorheriges
+	 * Element über die Option "Spaltenhöhe" aufgespannt hat, dann werden seine
+	 * eigenen Spalteneinstellungen beim Rendern ignoriert. Damit das im Backend
+	 * erkennbar ist, wird in dem Fall die Beschriftung der Legende gegen die
+	 * Variante mit dem Warnhinweis getauscht.
+	 *
+	 * Dazu werden alle sichtbaren Elemente desselben Elternelements in ihrer
+	 * Sortierreihenfolge durchlaufen, bis das bearbeitete Element erreicht ist,
+	 * und dabei mitgezählt, wie weit ein begonnenes Spaltenset noch reicht.
+	 *
+	 * Seiteneffekt: Überschreibt $GLOBALS['TL_LANG']['tl_content']['simple_columns_legend'].
+	 *
+	 * @param object $dc DataContainer des bearbeiteten Datensatzes; $dc->id ist
+	 *                   beim Anlegen eines neuen Elements noch leer, dann liefert
+	 *                   die Abfrage kein Ergebnis und es passiert nichts
+	 */
+	public function onLoadCallback($dc): void
 	{
 		// Database::getInstance() statt $this->Database: der Zugriff auf importierte
-		// Objekte ist seit Contao 5.2 als veraltet markiert
-		$objContent = Database::getInstance()->prepare('
+		// Objekte ist seit Contao 5.2 als veraltet markiert.
+		// fetchAllAssoc() statt der Ergebnis-Iteration mit magischen Properties –
+		// so ist der Zugriff auf die Spalten für Menschen wie für Analysewerkzeuge
+		// nachvollziehbar.
+		$arrContent = Database::getInstance()->prepare('
 			SELECT
 				`id`,`simple_columns`,`simple_columns_rowspan`
 			FROM
@@ -137,13 +162,14 @@ class simpleColumns extends Backend
 				`pid` = (SELECT `pid` FROM `tl_content` WHERE `id`=?) AND `invisible`=""
 			ORDER BY
 				`sorting`
-		')->execute($dc->id);
+		')->execute($dc->id)->fetchAllAssoc();
 
 		$rowspan = 0;
 
-		while ($objContent->next())
+		foreach ($arrContent as $arrRow)
 		{
-			if ($objContent->id == $dc->id)
+			// Beim bearbeiteten Element angekommen: was davor liegt, zählt
+			if ($arrRow['id'] == $dc->id)
 			{
 				break;
 			}
@@ -152,9 +178,9 @@ class simpleColumns extends Backend
 			{
 				$rowspan--;
 			}
-			elseif ($objContent->simple_columns != '' && $objContent->simple_columns_rowspan > 1)
+			elseif ($arrRow['simple_columns'] != '' && $arrRow['simple_columns_rowspan'] > 1)
 			{
-				$rowspan = $objContent->simple_columns_rowspan-1;
+				$rowspan = (int) $arrRow['simple_columns_rowspan'] - 1;
 			}
 		}
 
@@ -162,16 +188,6 @@ class simpleColumns extends Backend
 		{
 			$GLOBALS['TL_LANG']['tl_content']['simple_columns_legend'] = $GLOBALS['TL_LANG']['tl_content']['simple_columns_legend_ignore'];
 		}
-	}
-
-	public function disabledField($dc)
-	{
-		return '<p>Disabled</p>';
-	}
-
-	public function hiddenField($dc)
-	{
-		return '';
 	}
 
 }

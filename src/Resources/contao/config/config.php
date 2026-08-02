@@ -29,6 +29,7 @@
 
 $GLOBALS['simpleColumnCounter'] = array(2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0, 9=>0, 10=>0);
 $GLOBALS['simpleColumnRowspanCounter'] = 0;
+// Merkt sich "Zeile manuell schliessen" vom Start eines Spaltensets, bis das Set endet
 $GLOBALS['simpleColumnClose'] = false;
 $GLOBALS['simpleColumnBeHtml'] = '';
 
