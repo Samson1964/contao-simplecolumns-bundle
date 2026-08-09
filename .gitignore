@@ -6,3 +6,6 @@
 # PhpUnit
 /phpunit.xml
 /.phpunit.result.cache
+
+# Eigene Arbeitsnotizen, gehören nicht ins Paket
+/TODO.md
