@@ -1,5 +1,12 @@
 # SimpleColumns Changelog
 
+## Version 1.3.0 (2026-09-03)
+
+* Fix: „Zeile manuell schließen" blieb nicht nur beim expliziten Haken wirkungslos (siehe 1.2.0), sondern auch bei der automatischen Erkennung: Füllte ein Spaltenset (Option „Spaltenhöhe") die letzte Spalte einer Zeile vollständig aus, ohne dass der Autor manuell schloss, fehlte der abschließende Clearfix (`sc-clear`). Das nächste normale Element rutschte optisch unter die noch schwebenden Spalten und wirkte „verschluckt". Ursache: `$GLOBALS['simpleColumnClose']` wurde beim Start des Spaltensets aus dem Feld `simple_columns_close` gelesen — noch bevor die automatische Zeilenende-Erkennung dieses Feld weiter unten auf `true` setzte. Die Erfassung erfolgt jetzt erst nach der Erkennung. Aus der Praxis gemeldet (schachbund.de) für 2- und 3-spaltige Layouts mit je zwei Elementen pro Spalte.
+* Fix: In der border-box-Variante des Stylesheets (`simple_columns_bb.css`) hatte `.sc-first` den Innenabstand `padding-left` auf 0 überschrieben, während alle übrigen Spalten 15px behielten. Da `border-box` den Innenabstand zur deklarierten Breite zählt, war die erste Spalte jeder Zeile 15px breiter nutzbar als die folgenden — Bilder und Videos mit prozentualer Breite erschienen dadurch unterschiedlich groß (gemessen: 328px vs. 313px). Die content-box-Variante war nicht betroffen, da sie den Zwischenraum über Rand statt Innenabstand herstellt. Aus der Praxis gemeldet (schachbund.de).
+* Add: Regressionstests für beide Fehler, davon eine strukturelle Prüfung, dass `.sc-first` in `simple_columns_bb.css` kein `padding-left` mehr überschreibt.
+* Geprüft mit PHP 8.4.24 gegen Contao 4.13.58 und Contao 5.7.7: alle 16 Tests grün, PHPStan Level 6 und ECS ohne Befund. Beide Fehler zusätzlich per echtem Rendering im Browser nachgestellt und die Behebung bestätigt.
+
 ## Version 1.2.0 (2026-08-02)
 
 * Fix: „Zeile manuell schließen" blieb bei Spalten über mehrere Elemente wirkungslos. Die Einstellung wird an dem Element gesetzt, das ein Spaltenset beginnt, wirken muss sie aber am Ende des Sets — und das letzte Element eines Sets ist ein eingesammeltes Element ohne eigene Einstellungen. Die Einstellung wird jetzt beim Start gemerkt und am Ende angewandt. (Die dafür vorgesehene Variable `$simpleColumnClose` wurde seit der Contao-2-Fassung zwar gesetzt, aber nie ausgewertet.)

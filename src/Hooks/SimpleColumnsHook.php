@@ -104,15 +104,8 @@ class SimpleColumnsHook extends Frontend
             $simpleColumnRowspan = true;
             $GLOBALS['simpleColumnRowspanCounter'] = 0;
         } elseif ($objElement->simple_columns_rowspan > 1) {
-            // Erstes Element eines neuen Spaltensets. Die Einstellung "Zeile manuell
-
-            // schliessen" wird hier gemerkt: Gesetzt wird sie an diesem Element, wirken muss
-
-            // sie aber erst, wenn das Set zu Ende ist - und das letzte Element des Sets hat
-
-            // keine eigenen Einstellungen.
+            // Erstes Element eines neuen Spaltensets
             $GLOBALS['simpleColumnRowspanCounter'] = (int) $objElement->simple_columns_rowspan;
-            $GLOBALS['simpleColumnClose'] = (bool) $objElement->simple_columns_close;
             $startRowspan = true;
             $simpleColumnRowspan = true;
         }
@@ -163,6 +156,27 @@ class SimpleColumnsHook extends Frontend
         }
 
         $GLOBALS['simpleColumnCounter'][$columns] = $intUsed;
+
+        // Die Einstellung "Zeile manuell schließen" wird erst jetzt gemerkt, nachdem
+
+        // die automatische sc-last-Erkennung oben gelaufen ist: Belegt das Spaltenset
+
+        // die letzte Spalte der Zeile vollständig, setzt der Block darüber
+
+        // $objElement->simple_columns_close automatisch auf true - unabhängig davon, ob
+
+        // der Autor den Haken manuell gesetzt hat. Wurde $GLOBALS['simpleColumnClose']
+
+        // schon beim Start des Sets erfasst (wie früher), ging dieser Automatismus
+
+        // verloren: Das Umschlagelement bekam nie den Abschluss-Marker, der
+
+        // abschließende Clearfix fehlte, und das nächste normale Element rutschte
+
+        // optisch unter die noch schwebenden Spalten.
+        if ($startRowspan) {
+            $GLOBALS['simpleColumnClose'] = (bool) $objElement->simple_columns_close;
+        }
 
         // Das Umschlagelement eines Spaltensets bekommt zusätzlich die Klasse
 

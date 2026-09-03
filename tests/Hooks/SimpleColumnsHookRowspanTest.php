@@ -98,14 +98,61 @@ class SimpleColumnsHookRowspanTest extends TestCase
     }
 
     /**
-     * Ohne gesetzte Option darf kein Umbruch erzeugt werden.
+     * Füllt ein Spaltenset alle Spalten der Zeile automatisch aus, muss der
+     * abschließende Umbruch auch OHNE manuell gesetzten Haken erscheinen.
+     *
+     * Praxisfall (schachbund.de): 2 Spalten, beide über ein Spaltenset mit je 2
+     * Elementen gefüllt, der Autor verlässt sich auf die automatische
+     * Zeilenende-Erkennung statt manuell "Zeile schließen" zu setzen. Vorher wurde
+     * $GLOBALS['simpleColumnClose'] beim Start des zweiten Sets aus dem noch
+     * ungesetzten Feld gelesen - die automatische sc-last-Erkennung kam erst danach
+     * und ihr Ergebnis ging verloren. Der fehlende Clearfix ließ das nächste
+     * normale Element optisch unter die schwebenden Spalten rutschen.
      */
-    public function testOhneOptionKeinUmbruch(): void
+    public function testAutomatischGefuellteZeileSchliesstAuchOhneManuellenHaken(): void
     {
         $arrAusgabe = $this->render([
             ['simple_columns' => '2', 'simple_columns_rowspan' => 2],
             [],
             ['simple_columns' => '2', 'simple_columns_rowspan' => 2],
+            [],
+        ]);
+
+        $this->assertStringContainsString('sc-clear', $arrAusgabe[3], 'Zweites Set füllt die letzte Spalte automatisch aus, die Zeile muss trotzdem enden');
+    }
+
+    /**
+     * Dieselbe automatische Erkennung bei 3 statt 2 Spalten.
+     *
+     * Praxisfall (schachbund.de): "Fehler bei 3-spaltig mit je zwei Elementen".
+     */
+    public function testAutomatischGefuellteDreiSpaltigeZeileSchliesstAuchOhneManuellenHaken(): void
+    {
+        $arrAusgabe = $this->render([
+            ['simple_columns' => '3', 'simple_columns_rowspan' => 2],
+            [],
+            ['simple_columns' => '3', 'simple_columns_rowspan' => 2],
+            [],
+            ['simple_columns' => '3', 'simple_columns_rowspan' => 2],
+            [],
+        ]);
+
+        $this->assertStringNotContainsString('sc-clear', $arrAusgabe[1], 'Nach dem ersten Set ist erst 1 von 3 Spalten belegt');
+        $this->assertStringNotContainsString('sc-clear', $arrAusgabe[3], 'Nach dem zweiten Set sind erst 2 von 3 Spalten belegt');
+        $this->assertStringContainsString('sc-clear', $arrAusgabe[5], 'Nach dem dritten Set ist die Zeile voll, der Umbruch darf nicht fehlen');
+    }
+
+    /**
+     * Bleibt die Zeile nach dem Spaltenset unvollständig, darf kein Umbruch erzeugt
+     * werden - weder durch einen manuellen Haken noch automatisch.
+     *
+     * 3 Spalten, aber nur ein Set über 2 Spalten: die dritte Spalte bleibt für ein
+     * Folgeelement offen, die Zeile ist also noch nicht fertig.
+     */
+    public function testUnvollstaendigeZeileErzeugtKeinenUmbruch(): void
+    {
+        $arrAusgabe = $this->render([
+            ['simple_columns' => '3', 'simple_columns_rowspan' => 2],
             [],
         ]);
 
