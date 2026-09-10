@@ -52,7 +52,13 @@ class SimpleColumnsHook extends Frontend
      * $GLOBALS['TL_JAVASCRIPT'] eingetragen.
      *
      * @param object      $objElement        Datensatz des Inhaltselements (ContentModel)
-     * @param string      $strBuffer         Gerendertes HTML des Inhaltselements
+     * @param string|null $strBuffer         Gerendertes HTML des Inhaltselements. In der
+     *                                       Signatur nicht als string deklariert (so gibt
+     *                                       Contao es an alle getContentElement-Hooks
+     *                                       weiter) und kann null sein, wenn ein anderer,
+     *                                       vorher in der Hook-Kette laufender Baustein
+     *                                       fälschlich null statt eines leeren Strings
+     *                                       liefert
      * @param object|null $objContentElement Inhaltselement-Objekt; erst ab Contao 5
      *                                       übergeben und hier nicht benötigt
      *
@@ -61,6 +67,25 @@ class SimpleColumnsHook extends Frontend
     public function myGetContentElement($objElement, $strBuffer, $objContentElement = null): string
     {
         global $objPage;
+
+        // Normiert auf einen garantierten String, bevor irgendetwas mit $strBuffer passiert:
+
+        // Contaos Hook-Kette reicht den Rückgabewert des jeweils vorherigen
+
+        // getContentElement-Hooks weiter, ungeprüft und ohne Typdeklaration. Liefert ein
+
+        // anderer registrierter Hook fälschlich null statt eines leeren Strings, stürzte
+
+        // diese Methode bisher an zwei Stellen ab: direkt bei preg_match() weiter unten
+
+        // (TypeError, da dessen Parameter string verlangt) und beim Rückgabewert selbst
+
+        // (TypeError, da die Methode als string deklariert ist, strict_types aber keine
+
+        // automatische Umwandlung von null erlaubt). In der Praxis (schachbund.de) als echter
+
+        // 500er bei einem POST auf die Startseite aufgetreten.
+        $strBuffer = (string) $strBuffer;
 
         // Der Zustand über alle Elemente einer Seite hinweg liegt bewusst in Globals
 

@@ -1,5 +1,11 @@
 # SimpleColumns Changelog
 
+## Version 1.3.1 (2026-09-10)
+
+* Fix: Echter 500er (`TypeError`) bei einem POST auf die Startseite. `myGetContentElement()` ist als `: string` deklariert, der Parameter `$strBuffer` dagegen ohne Typdeklaration. Contao reicht in der Hook-Kette `getContentElement` den Rückgabewert des jeweils vorherigen Hooks ungeprüft weiter — lieferte dort ein anderer registrierter Baustein fälschlich `null` statt eines leeren Strings, stürzte diese Methode ab. Zwei unabhängige Absturzstellen bestätigt: `preg_match()` (verlangt `string` als Parameter) und der Rückgabewert selbst (`strict_types=1` erlaubt keine automatische Umwandlung von `null`). `$strBuffer` wird jetzt ganz am Anfang der Methode einmalig auf einen garantierten String normiert. Aus der Praxis gemeldet (schachbund.de), mit echtem Rendering nachgestellt.
+* Add: Zwei Regressionstests für beide bestätigten Absturzpfade.
+* Geprüft mit PHP 8.4.24 gegen Contao 4.13.58 und Contao 5.7.7: alle 18 Tests grün, PHPStan Level 6 und ECS ohne Befund.
+
 ## Version 1.3.0 (2026-09-03)
 
 * Fix: „Zeile manuell schließen" blieb nicht nur beim expliziten Haken wirkungslos (siehe 1.2.0), sondern auch bei der automatischen Erkennung: Füllte ein Spaltenset (Option „Spaltenhöhe") die letzte Spalte einer Zeile vollständig aus, ohne dass der Autor manuell schloss, fehlte der abschließende Clearfix (`sc-clear`). Das nächste normale Element rutschte optisch unter die noch schwebenden Spalten und wirkte „verschluckt". Ursache: `$GLOBALS['simpleColumnClose']` wurde beim Start des Spaltensets aus dem Feld `simple_columns_close` gelesen — noch bevor die automatische Zeilenende-Erkennung dieses Feld weiter unten auf `true` setzte. Die Erfassung erfolgt jetzt erst nach der Erkennung. Aus der Praxis gemeldet (schachbund.de) für 2- und 3-spaltige Layouts mit je zwei Elementen pro Spalte.
