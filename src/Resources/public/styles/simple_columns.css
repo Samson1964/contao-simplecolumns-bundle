@@ -1,477 +1,107 @@
-/* ********************************************************* */
-/* Allgemeines                                               */
-/* ********************************************************* */
+/**
+ * SimpleColumns - Stylesheet für das Box-Sizing-Modell content-box
+ *
+ * Jede Spalte ist ein Float. Der Abstand zwischen zwei Spalten ist der linke
+ * Rand (margin-left) von 1,5 % der Zeilenbreite; die erste Spalte einer Zeile
+ * (.sc-first) hat keinen. Der Rand ist !important, weil Themes häufig mit
+ * einer Kurzschreibweise wie "margin: 0 0 1em" auf Inhaltselemente den linken
+ * Rand sonst wieder löschen würden. Innenabstände gibt es nicht, deshalb haben
+ * alle gleich breiten Spalten einer Zeile exakt gleich breite Inhalte.
+ *
+ * Breite bei N Spalten (Prozent der Zeilenbreite), g = 1,5 %:
+ *
+ *   eine Spalte:             C = (100 - 0,02 - (N - 1) * g) / N
+ *   Spalte über k Spalten:   k * C + (k - 1) * g
+ *
+ * Jede vollständige Zeile ergibt damit 99,98 %. Die 0,02 % Reserve fängt
+ * Rundungen der Browser ab - ohne sie bricht die letzte Spalte gelegentlich
+ * in die nächste Zeile um. Die Werte sind auf 4 Nachkommastellen abgerundet.
+ *
+ * Die Klassen .scN-first und .scN-last (auch .scN-k-first / .scN-k-last) werden
+ * weiterhin vergeben, haben hier aber keine Regel - sie sind Einhängepunkte für
+ * eigenes CSS.
+ */
+
+/* allgemeine Definition */
 .sc {
-	/*border: 1px solid darkblue;*/
-	margin-left: 0;
-	margin-right: 0;
-	padding-left: 10px;
-	padding-right: 10px;
+	float: left;
+	margin-left: 1.5% !important;
+	margin-right: 0 !important;
+	padding-left: 0;
+	padding-right: 0;
 	clear: none;
 }
-
-.sc-first
-{
+.sc-first {
+	margin-left: 0 !important;
 	clear: both;
 }
-
-.sc-last {
-}
-
 .sc-clear {
 	clear: left;
 }
-
-.sc-rowspan > *
-{
+.sc-rowspan > * {
 	margin: 0;
 	padding: 0;
 }
 
-/* ********************************************************* */
-/* 2 Spalten                                                 */
-/* ********************************************************* */
-.sc2 {
-	width: 49.4%;
-	margin-left: 0.3%;
-	margin-right: 0.3%;
-	float: left;
-	display: inline;
-}
-.sc2-first {
-	width: 49.7%;
-	margin-left: 0;
-	clear: left;
-}
-.sc2-last {
-	width: 49.7%;
-	margin-right: 0;
-}
+/* 2 Spalten: eine Spalte 49,2400 %, Abstand 1,5 % */
+.sc2      { width: 49.2400%; }
 
-/* ********************************************************* */
-/* 3 Spalten                                                 */
-/* ********************************************************* */
-.sc3 {
-	width: 32.8%;
-	margin-left: 0.3%;
-	margin-right: 0.3%;
-	float: left;
-	display: inline;
-}
-.sc3-first {
-	width: 33%;
-	margin-left: 0;
-	clear: left;
-}
-.sc3-last {
-	width: 33%;
-	margin-right: 0;
-}
+/* 3 Spalten: eine Spalte 32,3266 %, Abstand 1,5 % */
+.sc3      { width: 32.3266%; }
+.sc3-2    { width: 66.1533%; }
 
-.sc3-2 {
-	width:65.6%;padding-right:1%;float:left;display:inline;
-}
-.sc3-2-first {
-	clear:left;
-}
-.sc3-2-last {
-	padding-right:1.1%;
-}
+/* 4 Spalten: eine Spalte 23,8700 %, Abstand 1,5 % */
+.sc4      { width: 23.8700%; }
+.sc4-2    { width: 49.2400%; }
+.sc4-3    { width: 74.6100%; }
 
-/* ********************************************************* */
-/* 4 Spalten                                                 */
-/* ********************************************************* */
-.sc4 {
-	width: 24.4%;
-	margin-left: 0.3%;
-	margin-right: 0.3%;
-	float: left;
-	display: inline;
-}
-.sc4-first {
-	width: 24.7%;
-	margin-left: 0;
-	clear: left;
-}
-.sc4-last {
-	width: 24.7%;
-	margin-right: 0;
-}
+/* 5 Spalten: eine Spalte 18,7960 %, Abstand 1,5 % */
+.sc5      { width: 18.7960%; }
+.sc5-2    { width: 39.0920%; }
+.sc5-3    { width: 59.3880%; }
+.sc5-4    { width: 79.6840%; }
 
-.sc4-2 {
-	width:49%;padding-right:1%;float:left;display:inline;
-}
-.sc4-2-first {
-	clear:left;
-}
-.sc4-2-last {
-}
-.sc4-3 {
-	width:74%;padding-right:1%;float:left;display:inline;
-}
-.sc4-3-first {
-	clear:left;
-}
-.sc4-3-last {
-}
+/* 6 Spalten: eine Spalte 15,4133 %, Abstand 1,5 % */
+.sc6      { width: 15.4133%; }
+.sc6-2    { width: 32.3266%; }
+.sc6-3    { width: 49.2400%; }
+.sc6-4    { width: 66.1533%; }
+.sc6-5    { width: 83.0666%; }
 
-/* ********************************************************* */
-/* 5 Spalten                                                 */
-/* ********************************************************* */
-.sc5 {
-	width: 19.4%;
-	margin-left: 0.3%;
-	margin-right: 0.3%;
-	float: left;
-	display: inline;
-}
-.sc5-first {
-	width: 19.7%;
-	margin-left: 0;
-	clear: left;
-}
-.sc5-last {
-	width: 19.7%;
-	margin-right: 0;
-}
+/* 7 Spalten: eine Spalte 12,9971 %, Abstand 1,5 % */
+.sc7      { width: 12.9971%; }
+.sc7-2    { width: 27.4942%; }
+.sc7-3    { width: 41.9914%; }
+.sc7-4    { width: 56.4885%; }
+.sc7-5    { width: 70.9857%; }
+.sc7-6    { width: 85.4828%; }
 
-.sc5-2 {
-	width:39%;padding-right:1%;float:left;display:inline;
-}
-.sc5-2-first {
-	clear:left;
-}
-.sc5-2-last {
-}
-.sc5-3 {
-	width:59%;padding-right:1%;float:left;display:inline;
-}
-.sc5-3-first {
-	clear:left;
-}
-.sc5-3-last {
-}
-.sc5-4 {
-	width:79%;padding-right:1%;float:left;display:inline;
-}
-.sc5-4-first {
-	clear:left;
-}
-.sc5-4-last {
-}
+/* 8 Spalten: eine Spalte 11,1850 %, Abstand 1,5 % */
+.sc8      { width: 11.1850%; }
+.sc8-2    { width: 23.8700%; }
+.sc8-3    { width: 36.5550%; }
+.sc8-4    { width: 49.2400%; }
+.sc8-5    { width: 61.9250%; }
+.sc8-6    { width: 74.6100%; }
+.sc8-7    { width: 87.2950%; }
 
-/* ********************************************************* */
-/* 6 Spalten                                                 */
-/* ********************************************************* */
-.sc6 {
-	width: 16.1%;
-	margin-left: 0.3%;
-	margin-right: 0.3%;
-	float: left;
-	display: inline;
-}
-.sc6-first {
-	width: 16.3%;
-	margin-left: 0;
-	clear: left;
-}
-.sc6-last {
-	width: 16.3%;
-	margin-right: 0;
-}
+/* 9 Spalten: eine Spalte 9,7755 %, Abstand 1,5 % */
+.sc9      { width: 9.7755%; }
+.sc9-2    { width: 21.0511%; }
+.sc9-3    { width: 32.3266%; }
+.sc9-4    { width: 43.6022%; }
+.sc9-5    { width: 54.8777%; }
+.sc9-6    { width: 66.1533%; }
+.sc9-7    { width: 77.4288%; }
+.sc9-8    { width: 88.7044%; }
 
-.sc6-2 {
-	width:32.33%;padding-right:1%;float:left;display:inline;
-}
-.sc6-2-first {
-	clear:left;
-}
-.sc6-2-last {
-}
-.sc6-3 {
-	width:49%;padding-right:1%;float:left;display:inline;
-}
-.sc6-3-first {
-	clear:left;
-}
-.sc6-3-last {
-}
-.sc6-4 {
-	width:65.67%;padding-right:1%;float:left;display:inline;
-}
-.sc6-4-first {
-	clear:left;
-}
-.sc6-4-last {
-}
-.sc6-5 {
-	width:82.33%;padding-right:1%;float:left;display:inline;
-}
-.sc6-5-first {
-	clear:left;
-}
-.sc6-5-last {
-}
-
-
-/* ********************************************************* */
-/* 7 Spalten                                                 */
-/* ********************************************************* */
-.sc7 {
-	width: 13.92%;
-	margin-left: 0.2%;
-	margin-right: 0.2%;
-	float: left;
-	display: inline;
-}
-.sc7-first {
-	width: 14%;
-	margin-left: 0;
-	clear: left;
-}
-.sc7-last {
-	width: 14%;
-	margin-right: 0;
-}
-
-.sc7-2 {
-	width:27.57%;padding-right:1%;float:left;display:inline;
-}
-.sc7-2-first {
-	clear:left;
-}
-.sc7-2-last {
-}
-.sc7-3 {
-	width:41.86%;padding-right:1%;float:left;display:inline;
-}
-.sc7-3-first {
-	clear:left;
-}
-.sc7-3-last {
-}
-.sc7-4 {
-	width:56.14%;padding-right:1%;float:left;display:inline;
-}
-.sc7-4-first {
-	clear:left;
-}
-.sc7-4-last {
-}
-.sc7-5 {
-	width:70.43%;padding-right:1%;float:left;display:inline;
-}
-.sc7-5-first {
-	clear:left;
-}
-.sc7-5-last {
-}
-.sc7-6 {
-	width:84.71%;padding-right:1%;float:left;display:inline;
-}
-.sc7-6-first {
-	clear:left;
-}
-.sc7-6-last {
-}
-
-
-/* 8-spaltig */
-.sc8 {
-	width:11.5%;padding-right:1%;float:left;display:inline;
-}
-.sc8-first {
-	clear:left;
-}
-.sc8-last {
-}
-.sc8-2 {
-	width:24%;padding-right:1%;float:left;display:inline;
-}
-.sc8-2-first {
-	clear:left;
-}
-.sc8-2-last {
-}
-.sc8-3 {
-	width:36.5%;padding-right:1%;float:left;display:inline;
-}
-.sc8-3-first {
-	clear:left;
-}
-.sc8-3-last {
-}
-.sc8-4 {
-	width:49%;padding-right:1%;float:left;display:inline;
-}
-.sc8-4-first {
-	clear:left;
-}
-.sc8-4-last {
-}
-.sc8-5 {
-	width:61.5%;padding-right:1%;float:left;display:inline;
-}
-.sc8-5-first {
-	clear:left;
-}
-.sc8-5-last {
-}
-.sc8-6 {
-	width:74%;padding-right:1%;float:left;display:inline;
-}
-.sc8-6-first {
-	clear:left;
-}
-.sc8-6-last {
-}
-.sc8-7 {
-	width:86.5%;padding-right:1%;float:left;display:inline;
-}
-.sc8-7-first {
-	clear:left;
-}
-.sc8-7-last {
-}
-
-
-/* 9-spaltig */
-.sc9 {
-	width:10.11%;padding-right:1%;float:left;display:inline;
-}
-.sc9-first {
-	clear:left;
-}
-.sc9-last {
-}
-.sc9-2 {
-	width:21.22%;padding-right:1%;float:left;display:inline;
-}
-.sc9-2-first {
-	clear:left;
-}
-.sc9-2-last {
-}
-.sc9-3 {
-	width:32.33%;padding-right:1%;float:left;display:inline;
-}
-.sc9-3-first {
-	clear:left;
-}
-.sc9-3-last {
-}
-.sc9-4 {
-	width:43.44%;padding-right:1%;float:left;display:inline;
-}
-.sc9-4-first {
-	clear:left;
-}
-.sc9-4-last {
-}
-.sc9-5 {
-	width:54.56%;padding-right:1%;float:left;display:inline;
-}
-.sc9-5-first {
-	clear:left;
-}
-.sc9-5-last {
-}
-.sc9-6 {
-	width:65.67%;padding-right:1%;float:left;display:inline;
-}
-.sc9-6-first {
-	clear:left;
-}
-.sc9-6-last {
-}
-.sc9-7 {
-	width:76.78%;padding-right:1%;float:left;display:inline;
-}
-.sc9-7-first {
-	clear:left;
-}
-.sc9-7-last {
-}
-.sc9-8 {
-	width:87.89%;padding-right:1%;float:left;display:inline;
-}
-.sc9-8-first {
-	clear:left;
-}
-.sc9-8-last {
-}
-
-
-/* 10-spaltig */
-.sc10 {
-	width:9%;padding-right:1%;float:left;display:inline;
-}
-.sc10-first {
-	clear:left;
-}
-.sc10-last {
-}
-.sc10-2 {
-	width:19%;padding-right:1%;float:left;display:inline;
-}
-.sc10-2-first {
-	clear:left;
-}
-.sc10-2-last {
-}
-.sc10-3 {
-	width:29%;padding-right:1%;float:left;display:inline;
-}
-.sc10-3-first {
-	clear:left;
-}
-.sc10-3-last {
-}
-.sc10-4 {
-	width:39%;padding-right:1%;float:left;display:inline;
-}
-.sc10-4-first {
-	clear:left;
-}
-.sc10-4-last {
-}
-.sc10-5 {
-	width:49%;padding-right:1%;float:left;display:inline;
-}
-.sc10-5-first {
-	clear:left;
-}
-.sc10-5-last {
-}
-.sc10-6 {
-	width:59%;padding-right:1%;float:left;display:inline;
-}
-.sc10-6-first {
-	clear:left;
-}
-.sc10-6-last {
-}
-.sc10-7 {
-	width:69%;padding-right:1%;float:left;display:inline;
-}
-.sc10-7-first {
-	clear:left;
-}
-.sc10-7-last {
-}
-.sc10-8 {
-	width:79%;padding-right:1%;float:left;display:inline;
-}
-.sc10-8-first {
-	clear:left;
-}
-.sc10-8-last {
-}
-.sc10-9 {
-	width:89%;padding-right:1%;float:left;display:inline;
-}
-.sc10-9-first {
-	clear:left;
-}
-.sc10-9-last {
-}
+/* 10 Spalten: eine Spalte 8,6480 %, Abstand 1,5 % */
+.sc10     { width: 8.6480%; }
+.sc10-2   { width: 18.7960%; }
+.sc10-3   { width: 28.9440%; }
+.sc10-4   { width: 39.0920%; }
+.sc10-5   { width: 49.2400%; }
+.sc10-6   { width: 59.3880%; }
+.sc10-7   { width: 69.5360%; }
+.sc10-8   { width: 79.6840%; }
+.sc10-9   { width: 89.8320%; }

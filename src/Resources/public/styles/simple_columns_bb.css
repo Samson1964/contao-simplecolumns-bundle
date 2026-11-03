@@ -1,513 +1,113 @@
 /**
- * Simple Columns Stylesheet with border-box model
+ * SimpleColumns - Stylesheet für das Box-Sizing-Modell border-box
+ *
+ * Jede Spalte ist ein Float. Der Abstand zwischen zwei Spalten ist der linke
+ * Rand (margin-left) von 1,5 % der Zeilenbreite; die erste Spalte einer Zeile
+ * (.sc-first) hat keinen. Der Rand ist !important, weil Themes häufig mit
+ * einer Kurzschreibweise wie "margin: 0 0 1em" auf Inhaltselemente den linken
+ * Rand sonst wieder löschen würden. Innenabstände gibt es nicht, deshalb haben
+ * alle gleich breiten Spalten einer Zeile exakt gleich breite Inhalte.
+ *
+ * Breite bei N Spalten (Prozent der Zeilenbreite), g = 1,5 %:
+ *
+ *   eine Spalte:             C = (100 - 0,02 - (N - 1) * g) / N
+ *   Spalte über k Spalten:   k * C + (k - 1) * g
+ *
+ * Jede vollständige Zeile ergibt damit 99,98 %. Die 0,02 % Reserve fängt
+ * Rundungen der Browser ab - ohne sie bricht die letzte Spalte gelegentlich
+ * in die nächste Zeile um. Die Werte sind auf 4 Nachkommastellen abgerundet.
+ *
+ * Die Klassen .scN-first und .scN-last (auch .scN-k-first / .scN-k-last) werden
+ * weiterhin vergeben, haben hier aber keine Regel - sie sind Einhängepunkte für
+ * eigenes CSS.
  */
 
 /* allgemeine Definition */
-.sc
-{
-	/*border: 1px solid black;*/
+.sc {
 	box-sizing: border-box !important;
 	-moz-box-sizing: border-box !important;
 	-webkit-box-sizing: border-box !important;
-	margin-left:0 !important;
-	margin-right:0 !important;
-	padding-left:0 !important;
-	clear: none !important;
-	padding-left: 15px !important;
 	float: left;
+	margin-left: 1.5% !important;
+	margin-right: 0 !important;
+	padding-left: 0 !important;
+	clear: none !important;
 }
-.sc-first
-{
+.sc-first {
+	margin-left: 0 !important;
 	clear: both !important;
 }
-.sc-last
-{
-}
-.sc-clear
-{
+.sc-clear {
 	clear: left !important;
 }
-.sc-border
-{
+.sc-border {
 	padding-right: 15px !important;
 	border-right: 1px solid silver;
 }
-
-.sc-rowspan > *
-{
-	margin: 0!important;
-	padding: 0!important;
+.sc-rowspan > * {
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
-/* 2-spaltig */
-.sc2
-{
-	width: 50%;
-}
-.sc2-first
-{
-}
-.sc2-last
-{
-}
+/* 2 Spalten: eine Spalte 49,2400 %, Abstand 1,5 % */
+.sc2      { width: 49.2400%; }
 
-/* 3-spaltig */
-.sc3
-{
-	width: 33.3%;
-}
-.sc3-first
-{
-}
-.sc3-last
-{
-}
-.sc3-2
-{
-	width: 66.6%;
-}
-.sc3-2-first
-{
-}
-.sc3-2-last
-{
-}
+/* 3 Spalten: eine Spalte 32,3266 %, Abstand 1,5 % */
+.sc3      { width: 32.3266%; }
+.sc3-2    { width: 66.1533%; }
 
-/* 4-spaltig */
-.sc4
-{
-	width: 25%;
-}
-.sc4-first
-{
-}
-.sc4-last
-{
-}
-.sc4-2
-{
-	width: 50%;
-}
-.sc4-2-first
-{
-}
-.sc4-2-last
-{
-}
-.sc4-3
-{
-	width: 75%;
-}
-.sc4-3-first
-{
-}
-.sc4-3-last
-{
-}
+/* 4 Spalten: eine Spalte 23,8700 %, Abstand 1,5 % */
+.sc4      { width: 23.8700%; }
+.sc4-2    { width: 49.2400%; }
+.sc4-3    { width: 74.6100%; }
 
-/* 5-spaltig */
-.sc5
-{
-	width:20%;
-}
-.sc5-first
-{
-}
-.sc5-last
-{
-}
-.sc5-2
-{
-	width:40%;
-}
-.sc5-2-first
-{
-}
-.sc5-2-last
-{
-}
-.sc5-3
-{
-	width: 60%;
-}
-.sc5-3-first
-{
-}
-.sc5-3-last
-{
-}
-.sc5-4
-{
-	width: 80%;
-}
-.sc5-4-first
-{
-}
-.sc5-4-last
-{
-}
+/* 5 Spalten: eine Spalte 18,7960 %, Abstand 1,5 % */
+.sc5      { width: 18.7960%; }
+.sc5-2    { width: 39.0920%; }
+.sc5-3    { width: 59.3880%; }
+.sc5-4    { width: 79.6840%; }
 
+/* 6 Spalten: eine Spalte 15,4133 %, Abstand 1,5 % */
+.sc6      { width: 15.4133%; }
+.sc6-2    { width: 32.3266%; }
+.sc6-3    { width: 49.2400%; }
+.sc6-4    { width: 66.1533%; }
+.sc6-5    { width: 83.0666%; }
 
-/* 6-spaltig */
-.sc6
-{
-	width:16.67%;
-}
-.sc6-first
-{
-}
-.sc6-last
-{
-}
-.sc6-2
-{
-	width:33.33%;
-}
-.sc6-2-first
-{
-}
-.sc6-2-last
-{
-}
-.sc6-3
-{
-	width: 50%;
-}
-.sc6-3-first
-{
-}
-.sc6-3-last
-{
-}
-.sc6-4
-{
-	width: 66.67%;
-}
-.sc6-4-first
-{
-}
-.sc6-4-last
-{
-}
-.sc6-5
-{
-	width: 83.33%;
-}
-.sc6-5-first
-{
-}
-.sc6-5-last
-{
-}
+/* 7 Spalten: eine Spalte 12,9971 %, Abstand 1,5 % */
+.sc7      { width: 12.9971%; }
+.sc7-2    { width: 27.4942%; }
+.sc7-3    { width: 41.9914%; }
+.sc7-4    { width: 56.4885%; }
+.sc7-5    { width: 70.9857%; }
+.sc7-6    { width: 85.4828%; }
 
+/* 8 Spalten: eine Spalte 11,1850 %, Abstand 1,5 % */
+.sc8      { width: 11.1850%; }
+.sc8-2    { width: 23.8700%; }
+.sc8-3    { width: 36.5550%; }
+.sc8-4    { width: 49.2400%; }
+.sc8-5    { width: 61.9250%; }
+.sc8-6    { width: 74.6100%; }
+.sc8-7    { width: 87.2950%; }
 
-/* 7-spaltig */
-.sc7
-{
-	width:14.28%;
-}
-.sc7-first
-{
-}
-.sc7-last
-{
-}
-.sc7-2
-{
-	width:28.57%;
-}
-.sc7-2-first
-{
-}
-.sc7-2-last
-{
-}
-.sc7-3
-{
-	width: 42.86%;
-}
-.sc7-3-first
-{
-}
-.sc7-3-last
-{
-}
-.sc7-4
-{
-	width: 57.14%;
-}
-.sc7-4-first
-{
-}
-.sc7-4-last
-{
-}
-.sc7-5
-{
-	width: 71.43%;
-}
-.sc7-5-first
-{
-}
-.sc7-5-last
-{
-}
-.sc7-6
-{
-	width: 85.71%;
-}
-.sc7-6-first
-{
-}
-.sc7-6-last
-{
-}
+/* 9 Spalten: eine Spalte 9,7755 %, Abstand 1,5 % */
+.sc9      { width: 9.7755%; }
+.sc9-2    { width: 21.0511%; }
+.sc9-3    { width: 32.3266%; }
+.sc9-4    { width: 43.6022%; }
+.sc9-5    { width: 54.8777%; }
+.sc9-6    { width: 66.1533%; }
+.sc9-7    { width: 77.4288%; }
+.sc9-8    { width: 88.7044%; }
 
-
-/* 8-spaltig */
-.sc8
-{
-	width:12.5%;
-}
-.sc8-first
-{
-}
-.sc8-last
-{
-}
-.sc8-2
-{
-	width:25%;
-}
-.sc8-2-first
-{
-}
-.sc8-2-last
-{
-}
-.sc8-3
-{
-	width: 37.5%;
-}
-.sc8-3-first
-{
-}
-.sc8-3-last
-{
-}
-.sc8-4
-{
-	width: 50%;
-}
-.sc8-4-first
-{
-}
-.sc8-4-last
-{
-}
-.sc8-5
-{
-	width: 62.5%;
-}
-.sc8-5-first
-{
-}
-.sc8-5-last
-{
-}
-.sc8-6
-{
-	width: 75%;
-}
-.sc8-6-first
-{
-}
-.sc8-6-last
-{
-}
-.sc8-7
-{
-	width: 87.5%;
-}
-.sc8-7-first
-{
-}
-.sc8-7-last
-{
-}
-
-
-/* 9-spaltig */
-.sc9
-{
-	width:11.11%;
-}
-.sc9-first
-{
-}
-.sc9-last
-{
-}
-.sc9-2
-{
-	width:22.22%;
-}
-.sc9-2-first
-{
-}
-.sc9-2-last
-{
-}
-.sc9-3
-{
-	width: 33.33%;
-}
-.sc9-3-first
-{
-}
-.sc9-3-last
-{
-}
-.sc9-4
-{
-	width: 44.44%;
-}
-.sc9-4-first
-{
-}
-.sc9-4-last
-{
-}
-.sc9-5
-{
-	width: 55.56%;
-}
-.sc9-5-first
-{
-}
-.sc9-5-last
-{
-}
-.sc9-6
-{
-	width: 66.67%;
-}
-.sc9-6-first
-{
-}
-.sc9-6-last
-{
-}
-.sc9-7
-{
-	width: 77.78%;
-}
-.sc9-7-first
-{
-}
-.sc9-7-last
-{
-}
-.sc9-8
-{
-	width: 88.89%;
-}
-.sc9-8-first
-{
-}
-.sc9-8-last
-{
-}
-
-
-/* 10-spaltig */
-.sc10
-{
-	width:10%;
-}
-.sc10-first
-{
-}
-.sc10-last
-{
-}
-.sc10-2
-{
-	width:20%;
-}
-.sc10-2-first
-{
-}
-.sc10-2-last
-{
-}
-.sc10-3
-{
-	width: 30%;
-}
-.sc10-3-first
-{
-}
-.sc10-3-last
-{
-}
-.sc10-4
-{
-	width: 40%;
-}
-.sc10-4-first
-{
-}
-.sc10-4-last
-{
-}
-.sc10-5
-{
-	width: 50%;
-}
-.sc10-5-first
-{
-}
-.sc10-5-last
-{
-}
-.sc10-6
-{
-	width: 60%;
-}
-.sc10-6-first
-{
-}
-.sc10-6-last
-{
-}
-.sc10-7
-{
-	width: 70%;
-}
-.sc10-7-first
-{
-}
-.sc10-7-last
-{
-}
-.sc10-8
-{
-	width: 80%;
-}
-.sc10-8-first
-{
-}
-.sc10-8-last
-{
-}
-.sc10-9
-{
-	width: 90%;
-}
-.sc10-9-first
-{
-}
-.sc10-9-last
-{
-}
+/* 10 Spalten: eine Spalte 8,6480 %, Abstand 1,5 % */
+.sc10     { width: 8.6480%; }
+.sc10-2   { width: 18.7960%; }
+.sc10-3   { width: 28.9440%; }
+.sc10-4   { width: 39.0920%; }
+.sc10-5   { width: 49.2400%; }
+.sc10-6   { width: 59.3880%; }
+.sc10-7   { width: 69.5360%; }
+.sc10-8   { width: 79.6840%; }
+.sc10-9   { width: 89.8320%; }

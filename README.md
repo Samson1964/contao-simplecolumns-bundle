@@ -6,7 +6,7 @@ Text von Mario Müller von der Contao-2-Version
 Funktionsumfang
 ---------------
 
-Mit SimpleColumns lassen sich Inhaltselemente einfach und ohne Änderungen am Template oder Stylesheet in Spalten anordnen. Unterstützt werden 2- bis 5-spaltige Layouts für alle Inhaltselemente. Die Elemente können auch über mehrere Spalten reichen, also bspw. ein 4-spaltiges Layout mit 3 Spalten, bei der die letzte Spalte über zwei Spalten reicht.
+Mit SimpleColumns lassen sich Inhaltselemente einfach und ohne Änderungen am Template oder Stylesheet in Spalten anordnen. Unterstützt werden 2- bis 10-spaltige Layouts für alle Inhaltselemente. Die Elemente können auch über mehrere Spalten reichen, also bspw. ein 4-spaltiges Layout mit 3 Spalten, bei der die letzte Spalte über zwei Spalten reicht.
 
 Anpassungen
 -----------
@@ -18,13 +18,27 @@ Die Positionierung wird standardmäßig über ein eingebautes Stylesheet realisi
 Für alle Elemente werden eindeutige Klassennamen vergeben:
 
 * Allgemein: `sc`, `sc-first`, `sc-last`, `sc-close` für die erste, letzte und manuell geschlossene Spalte
-* Spalten: `sc2` bis `sc5` für normale Spalten und `sc3-2` bis `sc5-4` für breitere Spalten
-* erste und letzte Spalte: `sc2-first` bis `sc5-last` für normale Spalten und `sc3-2-first` bis `sc5-4-last` für breitere Spalten
+* Spalten: `sc2` bis `sc10` für normale Spalten und `sc3-2` bis `sc10-9` für breitere Spalten
+* erste und letzte Spalte: `sc2-first` bis `sc10-last` für normale Spalten und `sc3-2-first` bis `sc10-9-last` für breitere Spalten
 * Spaltenhöhe: `sc-rowspan` ist die Klasse für das Umschlagelement (DIV) für ein Spaltenset
 
 Damit kann jedes Element eindeutig identifiziert und definiert werden.
 
 Die Standardstyles arbeiten mit Prozentangaben und sollten mit den meisten Layout funktionieren. In den Inhaltselementen müssen keine Zeilen begonnen oder beendet werden, das geschieht automatisch. Wichtig ist nur, dass pro Zeile immer die passenden Spalten vorhanden sind.
+
+Spaltenbreiten und Abstand
+--------------------------
+
+Eine vollständige Zeile füllt 99,98 % der Breite des umgebenden Elements aus, bei jeder Spaltenzahl von 2 bis 10 und jeder Kombination aus einfachen und breiteren Spalten. Zwischen zwei Spalten liegt ein Abstand von 1,5 % der Zeilenbreite; die erste Spalte einer Zeile beginnt bündig links, die letzte endet bündig rechts. Gleich breite Spalten haben exakt gleich breite Inhalte, Bilder und Videos erscheinen darin also gleich groß.
+
+Der Abstand ist der linke Rand (`margin-left`) jeder Spalte außer der ersten ihrer Zeile. Er ist `!important` gesetzt, damit ein Theme ihn nicht mit einer Regel wie `margin: 0 0 1em` auf Inhaltselementen wieder löscht. Innenabstände gibt es nicht. Die Breiten folgen bei N Spalten dieser Formel (Prozent der Zeilenbreite, Abstand g = 1,5 %):
+
+* eine Spalte: C = (100 − 0,02 − (N − 1) · g) / N
+* Spalte über k Spalten: k · C + (k − 1) · g
+
+Die 0,02 % Reserve fängt Rundungen der Browser ab; ohne sie bricht die letzte Spalte gelegentlich in die nächste Zeile um.
+
+Es gibt zwei Stylesheets, passend zur Einstellung „Box-Sizing-Modell" in den Systemeinstellungen. Sie haben dieselbe Geometrie; `simple_columns_bb.css` setzt zusätzlich `box-sizing: border-box` und kennt die Option „Rechten Rand zeichnen" (`sc-border`). Die Klassen `sc2-first`, `sc2-last` usw. werden weiterhin vergeben, haben in den mitgelieferten Stylesheets aber keine Regel – sie sind Einhängepunkte für eigenes CSS.
 
 Zusätzlich kann eine Zeile auch manuell beendet werden, sodass bspw. eine 3-spaltige Zeile schon nach zwei Elementen endet. Dies ist aber nur notwendig, wenn die Zeile vorzeitig beendet werden soll oder wenn nachfolgende Elemente, die nicht mit `simple_columns` positioniert werden, nicht richtig dargestellt werden.
 
